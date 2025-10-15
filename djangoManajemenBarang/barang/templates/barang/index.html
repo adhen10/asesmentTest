@@ -1,0 +1,75 @@
+{% extends 'barang/base.html' %} {% load humanize %} {% block content %}
+<div class="flex justify-between items-center mb-4">
+  <h2 class="text-2xl font-bold">Daftar Barang</h2>
+  <a href="{% url 'barang_create' %}" class="btn btn-primary"
+    >+ Tambah Barang</a
+  >
+</div>
+
+<table class="table table-zebra table-compact w-full bg-base-100 shadow-md">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nama</th>
+      <th>Stok</th>
+      <th>Harga</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for barang in barangs %}
+    <tr>
+      <td>{{ barangs.start_index|add:forloop.counter0 }}</td>
+      <td>{{ barang.nama }}</td>
+      <td>{{ barang.stok }}</td>
+      <td>Rp {{ barang.harga|floatformat:0|intcomma }}</td>
+      <td class="flex gap-2">
+        <a
+          href="{% url 'barang_edit' barang.id %}"
+          class="btn btn-sm btn-warning"
+          >Edit</a
+        >
+        <a
+          href="{% url 'barang_delete' barang.id %}"
+          class="btn btn-sm btn-error"
+          onclick="return confirm('Yakin hapus barang ini?')"
+          >Hapus</a
+        >
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5" class="text-center">Belum ada barang.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="mt-6 flex justify-center">
+  {% if barangs.has_other_pages %}
+    <div class="join">
+      {% if barangs.has_previous %}
+        <a href="?page={{ barangs.previous_page_number }}" class="join-item btn">«</a>
+      {% else %}
+        <button class="join-item btn btn-disabled">«</button>
+      {% endif %}
+
+      {% for num in barangs.paginator.page_range %}
+        {% if barangs.number == num %}
+          <button class="join-item btn btn-active">{{ num }}</button>
+        {% else %}
+          <a href="?page={{ num }}" class="join-item btn">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if barangs.has_next %}
+        <a href="?page={{ barangs.next_page_number }}" class="join-item btn">»</a>
+      {% else %}
+        <button class="join-item btn btn-disabled">»</button>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'barang/base.html' %} {% block content %}
+<div class="flex justify-center">
+  <div class="w-full max-w-2xl">
+    <div class="card bg-base-100 shadow-lg border border-base-200">
+      <div class="card-body">
+        <h2 class="text-xl font-semibold mb-4 text-center">Edit Barang</h2>
+
+        <form method="POST" action="{% url 'barang_update' barang.id %}">
+          {% csrf_token %}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Nama Barang</span>
+              </label>
+              <input
+                type="text"
+                name="nama"
+                value="{{ barang.nama }}"
+                class="input input-bordered w-full"
+                required
+              />
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">Stok</span>
+              </label>
+              <input
+                type="number"
+                name="stok"
+                value="{{ barang.stok }}"
+                class="input input-bordered w-full"
+                required
+              />
+            </div>
+
+            <div class="form-control md:col-span-2">
+              <label class="label">
+                <span class="label-text font-medium">Harga</span>
+              </label>
+              <input
+                type="number"
+                name="harga"
+                value="{{ barang.harga }}"
+                class="input input-bordered w-full"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="flex justify-end mt-6">
+            <button type="submit" class="btn btn-primary px-6">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

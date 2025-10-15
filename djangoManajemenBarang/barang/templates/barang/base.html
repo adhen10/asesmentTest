@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Barang Django</title>
+    {% load static %}
+    <link href="{% static 'css/output.css' %}" rel="stylesheet" />
+  </head>
+  <body class="bg-base-200 min-h-screen">
+    <nav class="navbar bg-base-100 shadow mb-6">
+      <div class="flex-1 px-2 mx-2 text-xl font-bold">Manajemen Barang Django</div>
+      <div class="flex-none">
+        {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="POST">
+          {% csrf_token %}
+          <button class="btn btn-ghost">Logout</button>
+        </form>
+        {% endif %}
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4">
+      {% if messages %} {% for message in messages %}
+      <div class="alert alert-success mb-4">{{ message }}</div>
+      {% endfor %} {% endif %} {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
